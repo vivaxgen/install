@@ -170,7 +170,7 @@ fi
 echo "Installing python 3.11 and its modules"
 micromamba -y install python=3.11 -c conda-forge -c defaults
 pip3 install  wheel
-pip3 install snakemake cyvcf2
+pip3 install snakemake cyvcf2 NanoPlot
 
 
 
