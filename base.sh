@@ -120,12 +120,13 @@ python3 << EOF
 import pathlib, os
 
 path = pathlib.Path("${BINDIR}").resolve()
-activation_file = path / "activate_umamba.sh"
+activation_file = path / "activate.sh"
 with open(activation_file, "w") as out:
   out.write('# -- base activation script from install/base.sh --\n\n')
+  out.write('export VVG_BASEDIR=${BASEDIR}\n')
   out.write('export MAMBA_ROOT_PREFIX=${BASEDIR}/opt/umamba\n')
-  out.write(f'PATH={path}:\${{PATH}}\n')
-  out.write('eval "\$(\${MAMBA_ROOT_PREFIX}/micromamba shell hook -s posix)"\n\n')
+  out.write('PATH=\${VVG_BASEDIR}/bin:\${PATH}\n')
+  out.write('eval "\$(micromamba shell hook -s posix)"\n\n')
   out.write('micromamba activate ${uMAMBA_ENVNAME}\n\n')
 
 print("\n\nTo activate the micromamba environment, source the activation script:\n")
