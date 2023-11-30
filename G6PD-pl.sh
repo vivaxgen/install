@@ -25,7 +25,7 @@ esac
 
 # Parsing arguments
 if [ -t 0 ] && [ -z "${BASEDIR:-}" ]; then
-  printf "Pipeline base directory? [./vvg-ngspl] "
+  printf "Pipeline base directory? [./ont-g6pd-pipeline] "
   read BASEDIR
 fi
 
@@ -34,13 +34,13 @@ OMIT='GATK4'
 source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/ngs-pl.sh)
 
 echo Cloning G6PD pipeline
-git clone https://github.com/mkleinecke/G6PD_pipeline.git ${VVG_BASEDIR}/env/G6PD-pipeline
+git clone https://github.com/mkleinecke/G6PD_pipeline.git ${BASEDIR}/env/G6PD-pipeline
 
-echo "source \${VVG_BASEDIR}/env/G6PD-pipeline/bin/activate.sh" >> ${VVG_BASEDIR}/bin/activate.sh
+echo "source \${VVG_BASEDIR}/env/G6PD-pipeline/bin/activate.sh" >> ${BASEDIR}/bin/activate.sh
 
 echo "G6PD pipeline has been successfully installed. Please source the activation file to start using it:"
 echo ""
-echo "    source ${VVG_BASEDIR}/bin/activate.sh"
+echo "    source ${BASEDIR}/bin/activate.sh"
 echo ""
 
 # EOF
