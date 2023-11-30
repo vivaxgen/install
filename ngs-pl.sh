@@ -83,6 +83,3 @@ git clone https://github.com/vivaxgen/ngs-pipeline.git ${BASEDIR}/env/ngs-pipeli
 echo "vivaxGEN ngs-pipeline has been successfully installed. Please read the docs for further setup."
 
 # EOF
-
-
-# EOF
