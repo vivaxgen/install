@@ -111,8 +111,8 @@ if ! [ -x "$(command -v readlink)" ]; then
   micromamba -y install coreutils -c conda-forge -c defaults
 fi
 
-echo "Installing base python 3.12"
-micromamba -y install python=3.12 -c conda-forge -c defaults
+echo "Installing base python 3.11"
+micromamba -y install python=3.11 -c conda-forge -c defaults
 pip3 install wheel
 
 python3 << EOF
