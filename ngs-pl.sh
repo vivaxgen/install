@@ -47,7 +47,7 @@ echo "installing minimap2"
 micromamba -y install minimap2 -c conda-forge -c bioconda -c defaults
 
 echo "Installing freebayes"
-micromamba -y install freebayes -c conda-forge -c bioconda -c defaults
+micromamba -y install freebayes=1.3.6 -c conda-forge -c bioconda -c defaults
 
 echo "Install vcftools"
 micromamba -y install vcftools -c conda-forge -c bioconda
