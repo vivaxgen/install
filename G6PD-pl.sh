@@ -36,11 +36,11 @@ source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/ngs-pl.
 echo Cloning G6PD pipeline
 git clone https://github.com/mkleinecke/G6PD_pipeline.git ${BASEDIR}/env/G6PD-pipeline
 
-echo "source \${VVG_BASEDIR}/env/G6PD-pipeline/bin/activate.sh" >> ${BASEDIR}/bin/activate.sh
+echo "source \${VVG_BASEDIR}/env/G6PD-pipeline/activate.sh" >> ${BASEDIR}/bin/activate.sh
 
 echo "G6PD pipeline has been successfully installed. Please source the activation file to start using it:"
 echo ""
-echo "    source ${BASEDIR}/bin/activate.sh"
+echo "    source ${BASEDIR}/activate.sh"
 echo ""
 
 # EOF
