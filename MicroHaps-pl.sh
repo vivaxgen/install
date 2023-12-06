@@ -103,6 +103,19 @@ micromamba -y install "muscle=3.8.1551" -c conda-forge -c bioconda -c defaults
 echo "Installing required R packages"
 micromamba -y install r-ggplot2 r-BiocManager r-RCurl r-argparse r-data.table r-seqinr r-doMC -c conda-forge -c bioconda -c defaults
 
+# Install additional R packages
+R --no-save << EOF
+BiocManager::install("GenomeInfoDb")
+BiocManager::install("GenomicRanges")
+BiocManager::install("Biostrings")
+BiocManager::install("Rsamtools")
+BiocManager::install("SummarizedExperiment")
+BiocManager::install("GenomicAlignments")
+BiocManager::install("ShortRead")
+BiocManager::install("dada2")
+BiocManager::install("limma")
+EOF
+
 if ! [[ "$OMIT" =~ GATK ]]; then
   echo "Installing the latest GATK"
   micromamba -y install GATK4 -c conda-forge -c bioconda
