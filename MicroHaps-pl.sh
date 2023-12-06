@@ -114,7 +114,7 @@ BiocManager::install("GenomicAlignments")
 BiocManager::install("ShortRead")
 BiocManager::install("dada2")
 BiocManager::install("limma")
-EOF
+#EOF
 
 if ! [[ "$OMIT" =~ GATK ]]; then
   echo "Installing the latest GATK"
@@ -140,4 +140,4 @@ git clone https://github.com/vivaxgen/MicroHaps.git ${BASEDIR}/env/MicroHaps
 
 echo "vivaxGEN MicroHaps pipeline has been successfully installed. Please read the docs for further setup."
 
-# EOF
+EOF
