@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 
 # installation script for vivaxgen ngs-pipeline [https://github.com/vivaxgen/ngs-pipeline]
 
@@ -28,6 +28,9 @@ if [ -t 0 ] && [ -z "${BASEDIR:-}" ]; then
   printf "Pipeline base directory? [./vvg-ngspl] "
   read BASEDIR
 fi
+
+# default value
+BASEDIR="${BASEDIR:-./vvg-ngspl}"
 
 uMAMBA_ENVNAME='ngs-pl'
 source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/base.sh)

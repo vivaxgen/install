@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/usr/bin/bash
 
-# installation script for vivaxgen ngs-pipeline [https://github.com/vivaxgen/ngs-pipeline]
+# installation script for G6PD pipeline
 
 # optional variable:
 # - BASEDIR
@@ -28,6 +28,9 @@ if [ -t 0 ] && [ -z "${BASEDIR:-}" ]; then
   printf "Pipeline base directory? [./ont-g6pd-pipeline] "
   read BASEDIR
 fi
+
+# default value
+BASEDIR="${BASEDIR:-./ont-g6pd-pipeline}"
 
 uMAMBA_ENVNAME='ngs-pl'
 OMIT='GATK4'
