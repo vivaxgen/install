@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 
 # installation script for vivaxgen MicroHaps pipeline [https://github.com/vivaxgen/MicroHaps]
 
@@ -28,6 +28,9 @@ if [ -t 0 ] && [ -z "${BASEDIR:-}" ]; then
   printf "Pipeline base directory? [./vvg-MicroHaps] "
   read BASEDIR
 fi
+
+# default value
+BASEDIR="${BASEDIR:-./vvg-MicroHaps}"
 
 uMAMBA_ENVNAME='MicroHaps'
 source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/base.sh)
@@ -141,6 +144,10 @@ mkdir -p ${BASEDIR}/env
 echo Cloning vivaxGEN MicroHaps pipeline
 git clone https://github.com/vivaxgen/MicroHaps.git ${BASEDIR}/env/MicroHaps
 
-echo "vivaxGEN MicroHaps pipeline has been successfully installed. Please read the docs for further setup."
+echo "source \${VVG_BASEDIR}/env/MicroHaps/activate.sh" >> ${BASEDIR}/bin/activate.sh
 
+echo "vivaxGEN MicroHaps pipeline has been successfully installed. Please source the activation file to start using it:"
+echo ""
+echo "    source ${BASEDIR}/bin/activate.sh"
+echo ""
 # EOF
