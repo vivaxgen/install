@@ -43,7 +43,7 @@ echo "source \${VVG_BASEDIR}/env/G6PD-pipeline/activate.sh" >> ${BASEDIR}/bin/ac
 
 echo "G6PD pipeline has been successfully installed. Please source the activation file to start using it:"
 echo ""
-echo "    source ${BASEDIR}/activate.sh"
+echo "    source ${BASEDIR}/bin/activate.sh"
 echo ""
 
 # EOF
