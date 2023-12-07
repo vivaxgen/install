@@ -135,8 +135,14 @@ pip3 install pandas
 pip3 install Pillow
 pip3 install IPython 
 pip3 install matplotlib
-pip3 install NanoPlot
+#pip3 install NanoPlot
 pip3 install argcomplete
+
+# to use latest of all python-related stuff, uncomment below and remove the conda parts
+# pip3 install biopython
+# pip3 install cutadapt
+# pip3 install multiqc
+# pip3 install tqdm
 
 # prepare MicroHaps pipeline environment
 mkdir -p ${BASEDIR}/env
@@ -146,6 +152,7 @@ git clone https://github.com/vivaxgen/MicroHaps.git ${BASEDIR}/env/MicroHaps
 
 echo "source \${VVG_BASEDIR}/env/MicroHaps/activate.sh" >> ${BASEDIR}/bin/activate.sh
 
+echo ""
 echo "vivaxGEN MicroHaps pipeline has been successfully installed. Please source the activation file to start using it:"
 echo ""
 echo "    source ${BASEDIR}/bin/activate.sh"
