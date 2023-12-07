@@ -150,6 +150,9 @@ mkdir -p ${BASEDIR}/env
 echo Cloning vivaxGEN MicroHaps pipeline
 git clone https://github.com/vivaxgen/MicroHaps.git ${BASEDIR}/env/MicroHaps
 
+#echo Cloning fastq2matrix pipeline
+#git clone https://github.com/pathogenseq/fastq2matrix.git ${BASEDIR}/env/MicroHaps
+
 echo "source \${VVG_BASEDIR}/env/MicroHaps/activate.sh" >> ${BASEDIR}/bin/activate.sh
 
 echo ""
