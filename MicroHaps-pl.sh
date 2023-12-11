@@ -149,11 +149,11 @@ mkdir -p ${BASEDIR}/env
 
 echo Cloning vivaxGEN MicroHaps pipeline
 git clone https://github.com/vivaxgen/MicroHaps.git ${BASEDIR}/env/MicroHaps
+echo "source \${VVG_BASEDIR}/env/MicroHaps/activate.sh" >> ${BASEDIR}/bin/activate.sh
 
 echo Cloning fastq2matrix
-git clone https://github.com/pathogenseq/fastq2matrix.git ${BASEDIR}/env/MicroHaps
-
-echo "source \${VVG_BASEDIR}/env/MicroHaps/activate.sh" >> ${BASEDIR}/bin/activate.sh
+git clone https://github.com/pathogenseq/fastq2matrix.git ${BASEDIR}/env/fastq2matrix
+echo "PYTHONPATH=${PYTHONPATH}:${BASEDIR}/env/fastq2matrix" >> ${BASEDIR}/bin/activate.sh
 
 echo ""
 echo "vivaxGEN MicroHaps pipeline has been successfully installed. Please source the activation file to start using it:"
