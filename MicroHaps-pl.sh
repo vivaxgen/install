@@ -43,8 +43,8 @@ micromamba -y install "bcftools>=1.18" "samtools>=1.18" -c conda-forge -c biocon
 echo "Installing latest bedtools"
 micromamba -y install bedtools -c conda-forge -c bioconda -c defaults
 
-echo "Installing python version 3.8"
-micromamba -y install "python=3.8" -c conda-forge -c bioconda -c defaults
+#echo "Installing python version 3.8"
+#micromamba -y install "python=3.8" -c conda-forge -c bioconda -c defaults
 
 echo "Installing latest fastp"
 micromamba -y install fastp -c conda-forge -c bioconda
