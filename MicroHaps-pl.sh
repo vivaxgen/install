@@ -153,11 +153,11 @@ echo "source \${VVG_BASEDIR}/env/MicroHaps/activate.sh" >> ${BASEDIR}/bin/activa
 
 echo Cloning fastq2matrix
 git clone https://github.com/pathogenseq/fastq2matrix.git ${BASEDIR}/env/fastq2matrix
-echo "PYTHONPATH=${PYTHONPATH}:${BASEDIR}/env/fastq2matrix" >> ${BASEDIR}/bin/activate.sh
+echo "PYTHONPATH=\${PYTHONPATH}:\${VVG_BASEDIR}/env/fastq2matrix" >> ${BASEDIR}/bin/activate.sh
 
 echo ""
 echo "vivaxGEN MicroHaps pipeline has been successfully installed. Please source the activation file to start using it:"
 echo ""
-echo "    source ${BASEDIR}/bin/activate.sh"
+echo "    source" `readlink -e ${BASEDIR}/bin/activate.sh`
 echo ""
 # EOF
