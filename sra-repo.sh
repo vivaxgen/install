@@ -1,0 +1,88 @@
+#!/usr/bin/bash
+
+# installation script for G6PD pipeline
+
+# optional variable:
+# - BASEDIR
+# - OMIT
+
+set -eu
+
+# run the base.sh
+# Detect the shell from which the script was called
+parent=$(ps -o comm $PPID |tail -1)
+parent=${parent#-}  # remove the leading dash that login shells have
+case "$parent" in
+  # shells supported by `micromamba shell init`
+  bash|fish|xonsh|zsh)
+    shell=$parent
+    ;;
+  *)
+    # use the login shell (basename of $SHELL) as a fallback
+    shell=${SHELL##*/}
+    ;;
+esac
+
+# Parsing arguments
+if [ -t 0 ] && [ -z "${BASEDIR:-}" ]; then
+  printf "Pipeline base directory? [./SRA] "
+  read BASEDIR
+fi
+
+# default value
+BASEDIR="${BASEDIR:-./SRA}"
+
+uMAMBA_ENVNAME='SRA'
+source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/base.sh)
+
+echo "Installing latest htslib tools"
+# samtools is needed to convert CRAM/BAM to FASTQ files
+micromamba -y install "samtools>=1.18" -c conda-forge -c bioconda -c defaults
+
+echo Installing NCBI SRA Toolkit
+micromamba -y install sra-tools -c conda-forge -c bioconda
+
+echo "installing required Python modules"
+pip3 install pycurl
+pip3 install requests
+pip3 install rich
+pip3 install IPython 
+pip3 install argcomplete
+pip3 install flufl.lock
+pip3 install pyyaml
+
+# prepare ngs-pipeline environment
+mkdir -p ${BASEDIR}/opt/env
+
+echo Cloning vivaxGEN SRA-Repo
+git clone https://github.com/vivaxgen/sra-repo.git ${BASEDIR}/opt/env/sra-repo
+
+echo "source \${VVG_BASEDIR}/opt/env/sra-repo/bin/activate.sh" >> ${BASEDIR}/bin/activate.sh
+
+echo preparing directories
+mkdir -p ${BASEDIR}/store
+mkdir -p ${BASEDIR}/store/.lock
+touch ${BASEDIR}/store/.sra-repo-db
+mkdir -p ${BASEDIR}/tmp
+mkdir -p ${BASEDIR}/cache
+
+echo Setting up environment
+cat >> ${BASEDIR}/bin/activate.sh << EOF
+
+# setting up environment
+export SRA_REPO_STORE=\${VVG_BASEDIR}/store
+export SRA_REPO_TMPDIR=\${VVG_BASEDIR}/tmp
+
+# for samtools fasta commands
+export REF_PATH=\${VVG_BASEDIR}/cache/%2s/%2s/%s:http://www.ebi.ac.uk/ena/cram/md5/%s
+export REF_CACHE=\${VVG_BASEDIR}/cache/%2s/%2s/%s
+
+EOF
+
+echo "vivaxGEN SRA-Repo has been successfully installed. Read the docs for usage."
+echo "Please source the activation file to start using it:"
+echo ""
+echo "    source" `readlink -e ${BASEDIR}/bin/activate.sh`
+echo ""
+
+# EOF
