@@ -111,6 +111,11 @@ if ! [ -x "$(command -v readlink)" ]; then
   micromamba -y install coreutils -c conda-forge -c defaults
 fi
 
+if ! [ -x "$(command -v parallel)" ]; then
+  echo "Installing parallel"
+  micromamba -y install parallel -c conda-forge -c defaults
+fi
+
 echo "Installing base python 3.11"
 micromamba -y install python=3.11 -c conda-forge -c defaults
 pip3 install wheel
