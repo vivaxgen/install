@@ -128,7 +128,7 @@ if ! [[ "$OMIT" =~ GATK ]]; then
 fi
 
 echo "installing required Python modules"
-pip3 install snakemake
+pip3 install 'snakemake<8'
 pip3 install cyvcf2
 pip3 install pysam
 pip3 install pandas
