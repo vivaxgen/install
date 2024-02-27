@@ -48,15 +48,15 @@ assuming that VVG_BASEDIR is the base directory of the installation::
   The activation script which needed to be source first before using the
   installed software package, will perform the following:
 
-  - export $VVG_BASEDIR environment variable with the VVG_BASEDIR
+  - export ``$VVG_BASEDIR`` environment variable with the VVG_BASEDIR
 
   - add ``$VVG_BASEDIR/bin/`` to PATH
 
-  - set $MAMBA_ROOT_PREFIX to $VVG_BASEDIR/opt/umamba
+  - set ``$MAMBA_ROOT_PREFIX`` to ``$VVG_BASEDIR/opt/umamba``
 
   - prepare and activate the required micromamba environment
 
-  - source any bashrc file in $VVG_BASEDIR/etc/bashrc.d/ in alphabetical order
+  - source any bashrc file in ``$VVG_BASEDIR/etc/bashrc.d/`` in alphabetical order
 
 ``bin/micromamba``
   The micromamba executable binary.
@@ -70,6 +70,15 @@ assuming that VVG_BASEDIR is the base directory of the installation::
 ``etc/bashrc.d/``
   Directory containing bash resource files to be sourced in alphabetical order
   when ``bin/activate.sh`` is being sourced.
+  Software package's specific activation source file should be put inside this
+  directory.
+  The activation source file name should be prefixed with 2-digit and dash, eg
+  for vivaxGEN NGS-Pipeline, the source file is ``10-ngs-pipeline``.
+  Other pipelines and software packages that rely on vivaxGEN NGS-Pipeline
+  should use number starting from ``50-``.
+  Other global settings that can be modified by users should use number
+  starting from ``90-``, eg. the snakemake job scheduler profile setting is
+  ``99-snakemake-profiles``.
 
 ``etc/snakemake-profiles/``
   The directory for holding the snakemake profiles related to job scheduler,
