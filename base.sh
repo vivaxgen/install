@@ -92,6 +92,12 @@ chmod +x "${BINDIR}/micromamba"
 
 echo "Setting up base directory structure at ${BASEDIR}"
 
+mkdir ${BASEDIR}/opt
+mkdir ${BASEDIR}/envs
+mkdir ${BASEDIR}/etc
+mkdir ${BASEDIR}/etc/bashrc.d
+mkdir ${BASEDIR}/etc/snakemake-profiles
+
 export MAMBA_ROOT_PREFIX=${uMAMBA_DIR}
 eval "$(${BINDIR}/micromamba shell hook -s posix)"
 
@@ -120,19 +126,37 @@ echo "Installing base python 3.11"
 micromamba -y install python=3.11 -c conda-forge -c defaults
 pip3 install wheel
 
+echo "Preparing activation source file"
 python3 << EOF
 
 import pathlib, os
 
 BASEDIR = pathlib.Path("${BASEDIR}").resolve()
+uMAMBA_ENVNAME = "${uMAMBA_ENVNAME}"
 activation_file = BASEDIR / 'bin' / "activate.sh"
+
+content = f"""
+
+# -- base activation source script from install/base.sh --
+
+export VVG_BASEDIR={BASEDIR}
+PATH=\${{VVG_BASEDIR}}/bin:\${{PATH}}
+export MAMBA_ROOT_PREFIX=\${{VVG_BASEDIR}}/opt/umamba
+eval "\$(micromamba shell hook -s posix)"
+micromamba activate {uMAMBA_ENVNAME}
+
+for rc in \${{VVG_BASEDIR}}/etc/bashrc.d/*; do
+    if [ -f "\$rc" ]; then
+        . "\$rc"
+    fi
+done
+unset rc
+
+
+"""
+
 with open(activation_file, "w") as out:
-  out.write('# -- base activation script from install/base.sh --\n\n')
-  out.write(f'export VVG_BASEDIR={BASEDIR}\n')
-  out.write('export MAMBA_ROOT_PREFIX=\${VVG_BASEDIR}/opt/umamba\n')
-  out.write('PATH=\${VVG_BASEDIR}/bin:\${PATH}\n')
-  out.write('eval "\$(micromamba shell hook -s posix)"\n\n')
-  out.write('micromamba activate ${uMAMBA_ENVNAME}\n\n')
+  out.write(content)
 
 print("\n\nTo activate the micromamba environment, source the activation script:\n")
 print("    source " + activation_file.as_posix())
