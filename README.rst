@@ -72,6 +72,7 @@ assuming that VVG_BASEDIR is the base directory of the installation::
   when ``bin/activate.sh`` is being sourced.
   Software package's specific activation source file should be put inside this
   directory.
+
   The activation source file name should be prefixed with 2-digit and dash, eg
   for vivaxGEN NGS-Pipeline, the source file is ``10-ngs-pipeline``.
   Other pipelines and software packages that rely on vivaxGEN NGS-Pipeline
@@ -82,9 +83,5 @@ assuming that VVG_BASEDIR is the base directory of the installation::
 
 ``etc/snakemake-profiles/``
   The directory for holding the snakemake profiles related to job scheduler,
-  eg. profiles related to slurm
-
-
-
-
+  eg. profiles related to slurm.
 
