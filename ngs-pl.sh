@@ -77,12 +77,12 @@ pip3 install matplotlib
 pip3 install NanoPlot
 pip3 install argcomplete
 
-# prepare ngs-pipeline environment
-mkdir -p ${BASEDIR}/env
 
 echo Cloning vivaxGEN ngs-pipeline
-git clone https://github.com/vivaxgen/ngs-pipeline.git ${BASEDIR}/env/ngs-pipeline
+git clone https://github.com/vivaxgen/ngs-pipeline.git ${BASEDIR}/envs/ngs-pipeline
 
-echo "vivaxGEN ngs-pipeline has been successfully installed. Please read the docs for further setup."
+echo "vivaxGEN ngs-pipeline has been successfully installed. "
+echo "Please read the docs for further setup."
+echo "The base installation directory is ${BASEDIR}"
 
 # EOF
