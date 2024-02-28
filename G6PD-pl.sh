@@ -42,9 +42,10 @@ echo "export APPTAINER_DIR=\${VVG_BASEDIR}/opt/apptainer" >> ${BASEDIR}/bin/acti
 mkdir -p ${BASEDIR}/opt/apptainer
 
 echo Cloning G6PD pipeline
-git clone https://github.com/vivaxgen/G6PD_MinION.git ${BASEDIR}/env/G6PD-pipeline
+git clone https://github.com/vivaxgen/G6PD_MinION.git ${BASEDIR}/envs/G6PD-pipeline
 
-echo "source \${VVG_BASEDIR}/env/G6PD-pipeline/activate.sh" >> ${BASEDIR}/bin/activate.sh
+#echo "source \${VVG_BASEDIR}/env/G6PD-pipeline/activate.sh" >> ${BASEDIR}/bin/activate.sh
+ln -sr ${BASEDIR}/envs/G6PD-pipeline/activate.sh ${BASEDIR}/etc/bashrc.d/50-g6pd-pipeline
 
 echo Activating enviroment
 # prevent unbound variable for PYTHONPATH and NGS_PIPELINE_CMD_MODS
