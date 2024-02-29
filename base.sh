@@ -92,11 +92,19 @@ chmod +x "${BINDIR}/micromamba"
 
 echo "Setting up base directory structure at ${BASEDIR}"
 
-mkdir ${BASEDIR}/opt
-mkdir ${BASEDIR}/envs
-mkdir ${BASEDIR}/etc
-mkdir ${BASEDIR}/etc/bashrc.d
-mkdir ${BASEDIR}/etc/snakemake-profiles
+export OPT_DIR=${BASEDIR}/opt
+export APPTAINER_DIR=${BASEDIR}/opt/apptainer
+export ENVS_DIR=${BASEDIR}/envs
+export ETC_DIR=${BASEDIR}/etc
+export BASHRC_DIR=${ETC_DIR}/bashrc.d
+export SNAKEMAKEPROFILE_DIR=${ETC_DIR}/snakemake-profiles
+
+mkdir ${OPT_DIR}
+mkdir ${APPTAINER_DIR}
+mkdir ${ENVS_DIR}
+mkdir ${ETC_DIR}
+mkdir ${BASHRC_DIR}
+mkdir ${SNAKEMAKEPROFILE_DIR}
 
 export MAMBA_ROOT_PREFIX=${uMAMBA_DIR}
 eval "$(${BINDIR}/micromamba shell hook -s posix)"
@@ -138,10 +146,12 @@ activation_file = BASEDIR / 'bin' / "activate.sh"
 content = f"""
 
 # -- base activation source script from install/base.sh --
+# -- [https://github.com/vivaxgen/install] --
 
 export VVG_BASEDIR={BASEDIR}
 PATH=\${{VVG_BASEDIR}}/bin:\${{PATH}}
 export MAMBA_ROOT_PREFIX=\${{VVG_BASEDIR}}/opt/umamba
+export APPTAINER_DIR=\${{VVG_BASEDIR}}/opt/apptainer
 eval "\$(micromamba shell hook -s posix)"
 micromamba activate {uMAMBA_ENVNAME}
 
