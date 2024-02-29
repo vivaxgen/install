@@ -38,14 +38,12 @@ source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/ngs-pl.
 
 echo Installing apptainer
 micromamba -y install apptainer -c conda-forge -c bioconda
-echo "export APPTAINER_DIR=\${VVG_BASEDIR}/opt/apptainer" >> ${BASEDIR}/bin/activate.sh
-mkdir -p ${BASEDIR}/opt/apptainer
 
 echo Cloning G6PD pipeline
-git clone https://github.com/vivaxgen/G6PD_MinION.git ${BASEDIR}/envs/G6PD-pipeline
+git clone https://github.com/vivaxgen/G6PD_MinION.git ${ENVS_DIR}/G6PD-pipeline
 
 #echo "source \${VVG_BASEDIR}/env/G6PD-pipeline/activate.sh" >> ${BASEDIR}/bin/activate.sh
-ln -sr ${BASEDIR}/envs/G6PD-pipeline/activate.sh ${BASEDIR}/etc/bashrc.d/50-g6pd-pipeline
+ln -sr ${ENVS_DIR}/G6PD-pipeline/activate.sh ${BASHRC_DIR}/50-g6pd-pipeline
 
 echo Activating enviroment
 # prevent unbound variable for PYTHONPATH and NGS_PIPELINE_CMD_MODS
@@ -53,14 +51,16 @@ export PYTHONPATH=""
 export NGS_PIPELINE_CMD_MODS=""
 source ${BASEDIR}/bin/activate.sh
 
-# echo Downloading Clair3 apptainer/singularity image
-# do something here
+# install Clair3 using apptainer/singularity image, since the conda-based
+# installation requires python version 3.9.0, conflicting with our python 3.11
+echo Downloading Clair3 apptainer/singularity image
+apptainer pull ${APPTAINER_DIR}clair3.sif docker://hkubal/clair3:latest
 
 echo Indexing reference sequence
 ngs-pl index-reference
 
-
-echo "G6PD pipeline has been successfully installed. Please source the activation file to start using it:"
+echo "G6PD pipeline has been successfully installed."
+echo "Please use the following command to source the activation script and activate the environment:"
 echo ""
 echo "    source ${BASEDIR}/bin/activate.sh"
 echo ""
