@@ -79,7 +79,8 @@ pip3 install argcomplete
 
 
 echo Cloning vivaxGEN ngs-pipeline
-git clone https://github.com/vivaxgen/ngs-pipeline.git ${BASEDIR}/envs/ngs-pipeline
+git clone https://github.com/vivaxgen/ngs-pipeline.git ${ENVS_DIR}/ngs-pipeline
+ln -sr ${ENVS_DIR}/ngs-pipeline/bin/activate.sh ${BASHRC_DIR}/10-ngs-pipeline
 
 echo "vivaxGEN ngs-pipeline has been successfully installed. "
 echo "Please read the docs for further setup."
