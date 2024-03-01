@@ -72,8 +72,9 @@ pip3 install cyvcf2
 pip3 install pysam
 pip3 install pandas
 pip3 install Pillow
-pip3 install IPython 
+pip3 install IPython
 pip3 install matplotlib
+pip3 install pycairo
 pip3 install NanoPlot
 pip3 install argcomplete
 
