@@ -33,7 +33,7 @@ fi
 BASEDIR="${BASEDIR:-./vvg-MicroHaps}"
 
 uMAMBA_ENVNAME='MicroHaps'
-source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/base.sh)
+source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/ngs-pl.sh)
 
 OMIT="${OMIT:-}"
 
@@ -106,21 +106,21 @@ micromamba -y install sambamba -c conda-forge -c bioconda -c defaults
 echo "Installing muscle version v3.8.1551"
 micromamba -y install "muscle=3.8.1551" -c conda-forge -c bioconda -c defaults
 
-echo "Installing required R packages"
-micromamba -y install r-ggplot2 r-BiocManager r-RCurl r-argparse r-data.table r-seqinr r-doMC -c conda-forge -c bioconda -c defaults
+#echo "Installing required R packages"
+#micromamba -y install r-ggplot2 r-BiocManager r-RCurl r-argparse r-data.table r-seqinr r-doMC -c conda-forge -c bioconda -c defaults
 
 # Install additional R packages
-R --no-save << EOF
-BiocManager::install("GenomeInfoDb")
-BiocManager::install("GenomicRanges")
-BiocManager::install("Biostrings")
-BiocManager::install("Rsamtools")
-BiocManager::install("SummarizedExperiment")
-BiocManager::install("GenomicAlignments")
-BiocManager::install("ShortRead")
-BiocManager::install("dada2")
-BiocManager::install("limma")
-EOF
+#R --no-save << EOF
+#BiocManager::install("GenomeInfoDb")
+#BiocManager::install("GenomicRanges")
+#BiocManager::install("Biostrings")
+#BiocManager::install("Rsamtools")
+#BiocManager::install("SummarizedExperiment")
+#BiocManager::install("GenomicAlignments")
+#BiocManager::install("ShortRead")
+#BiocManager::install("dada2")
+#BiocManager::install("limma")
+#EOF
 
 if ! [[ "$OMIT" =~ GATK ]]; then
   echo "Installing the latest GATK"
@@ -147,7 +147,7 @@ pip3 install tqdm
 # prepare MicroHaps pipeline environment
 
 echo Cloning vivaxGEN MicroHaps pipeline
-git clone https://github.com/vivaxgen/MicroHaps.git ${ENVS_DIR}/env/MicroHaps
+git clone https://github.com/vivaxgen/MicroHaps.git ${ENVS_DIR}/MicroHaps
 #echo "source \${VVG_BASEDIR}/env/MicroHaps/activate.sh" >> ${DIR}/bin/activate.sh
 ln -sr ${ENVS_DIR}/MicroHaps/activate.sh ${BASHRC_DIR}/50-MicroHaps
 
