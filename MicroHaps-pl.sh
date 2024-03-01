@@ -155,6 +155,15 @@ ln -sr ${ENVS_DIR}/MicroHaps/activate.sh ${BASHRC_DIR}/50-MicroHaps
 #git clone https://github.com/pathogenseq/fastq2matrix.git ${BASEDIR}/env/fastq2matrix
 #echo "export PYTHONPATH=\${PYTHONPATH}:\${VVG_BASEDIR}/env/fastq2matrix" >> ${BASEDIR}/bin/activate.sh
 
+echo Activating enviroment
+# prevent unbound variable for PYTHONPATH and NGS_PIPELINE_CMD_MODS
+export PYTHONPATH=""
+export NGS_PIPELINE_CMD_MODS=""
+source ${BINDIR}/activate.sh
+
+echo Initialize enviroment
+ngs-pl initialize --target wgs
+
 echo ""
 echo "vivaxGEN MicroHaps pipeline has been successfully installed."
 echo "Please source the activation file with the following command:"
