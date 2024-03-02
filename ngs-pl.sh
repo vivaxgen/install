@@ -85,7 +85,7 @@ echo "vivaxGEN ngs-pipeline has been successfully installed. "
 echo "Please read the docs for further setup."
 echo "The base installation directory (VVG_BASEDIR) is:"
 echo
-echo ${BASEDIR}"
+echo ${BASEDIR}
 echo
 
 # EOF
