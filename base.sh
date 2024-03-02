@@ -106,6 +106,24 @@ mkdir ${ETC_DIR}
 mkdir ${BASHRC_DIR}
 mkdir ${SNAKEMAKEPROFILE_DIR}
 
+echo "Preparing update script"
+cat > ${BINDIR}/update-pipeline.sh << EOF
+#!/usr/bin/env bash
+
+echo "Updating all sofware packages under \\\$VVG_BASEDIR/envs..."
+for p in \\\$VVG_BASEDIR/envs/*; do
+    if [ -d "\\\$p" ]; then
+        echo "Updating \\\${p}"
+        (cd "\\\$p"; git pull)
+    fi
+done
+unset p
+
+echo "Updating finished."
+
+EOF
+chmod a+x ${BINDIR}/update-pipeline.sh
+
 export MAMBA_ROOT_PREFIX=${uMAMBA_DIR}
 eval "$(${BINDIR}/micromamba shell hook -s posix)"
 
@@ -135,23 +153,6 @@ micromamba -y install python=3.11 -c conda-forge -c defaults
 pip3 install wheel
 pip3 install 'pulp<2.8'
 pip3 install 'snakemake<8'
-
-echo "Preparing update script"
-cat > ${BINDIR}/update-pipeline.sh << EOF
-#!/usr/bin/env bash
-
-echo "Updating all sofware packages under \$VVG_BASEDIR/envs..."
-for p in \$VVG_BASEDIR/envs/*; do
-    if [ -d "\$p" ]; then
-        echo "Updating \${p}"
-        (cd "\$p"; git pull)
-    fi
-done
-unset p
-
-echo "Updating finished."
-
-EOF
 
 echo "Preparing activation source file"
 python3 << EOF
