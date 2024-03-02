@@ -37,6 +37,11 @@ source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/base.sh
 
 OMIT="${OMIT:-}"
 
+if ! [[ "$OMIT" =~ GATK ]]; then
+  echo "Installing the latest GATK"
+  micromamba -y install GATK4 -c conda-forge -c bioconda
+fi
+
 echo "Installing latest htslib tools"
 micromamba -y install "bcftools>=1.18" "samtools>=1.18" -c conda-forge -c bioconda -c defaults
 
@@ -61,14 +66,7 @@ micromamba -y install chopper -c conda-forge -c bioconda -c defaults
 echo "Installing snpEff"
 micromamba -y install snpeff -c conda-forge -c bioconda -c defaults
 
-if ! [[ "$OMIT" =~ GATK ]]; then
-  echo "Installing the latest GATK"
-  micromamba -y install GATK4 -c conda-forge -c bioconda
-fi
-
 echo "installing required Python modules"
-pip3 install 'snakemake<8'
-pip3 install 'pulp<2.8'
 pip3 install cyvcf2
 pip3 install pysam
 pip3 install pandas
@@ -79,13 +77,15 @@ pip3 install pycairo
 pip3 install NanoPlot
 pip3 install argcomplete
 
-
 echo Cloning vivaxGEN ngs-pipeline
 git clone https://github.com/vivaxgen/ngs-pipeline.git ${ENVS_DIR}/ngs-pipeline
 ln -sr ${ENVS_DIR}/ngs-pipeline/bin/activate.sh ${BASHRC_DIR}/10-ngs-pipeline
 
 echo "vivaxGEN ngs-pipeline has been successfully installed. "
 echo "Please read the docs for further setup."
-echo "The base installation directory is ${BASEDIR}"
+echo "The base installation directory (VVG_BASEDIR) is:"
+echo
+echo ${BASEDIR}"
+echo
 
 # EOF

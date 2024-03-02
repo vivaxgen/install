@@ -133,6 +133,8 @@ fi
 echo "Installing base python 3.11"
 micromamba -y install python=3.11 -c conda-forge -c defaults
 pip3 install wheel
+pip3 install 'pulp<2.8'
+pip3 install 'snakemake<8'
 
 echo "Preparing activation source file"
 python3 << EOF
