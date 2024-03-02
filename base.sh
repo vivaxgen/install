@@ -140,7 +140,7 @@ echo "Preparing update script"
 cat > ${BINDIR}/update-pipeline.sh << EOF
 #!/usr/bin/env bash
 
-echo "Updating all sofware packages under $VVG_BASEDIR/envs..."
+echo "Updating all sofware packages under \$VVG_BASEDIR/envs..."
 for p in \$VVG_BASEDIR/envs/*; do
     if [ -d "\$p" ]; then
         echo "Updating \${p}"
