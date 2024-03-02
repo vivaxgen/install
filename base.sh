@@ -24,19 +24,19 @@ esac
 
 # Parsing arguments
 if [ -t 0 ] && [ -z "${BASEDIR:-}" ]; then
-  printf "Base directory? [./vivaxgen-ngspl] "
+  printf "Base directory? [./vvg-base] "
   read BASEDIR
 fi
 
 if [ -t 0 ] && [ -z "${uMAMBA_ENVNAME:-}" ]; then
-  printf "micromamba environment name? [ngs-pl] "
+  printf "micromamba environment name? [vvg-base] "
   read uMAMBA_ENVNAME
 fi
 
 # Fallbacks
-BASEDIR="${BASEDIR:-./vivaxgen-ngspl}"
+BASEDIR="${BASEDIR:-./vvg-base}"
 BINDIR="${BASEDIR}/bin"
-uMAMBA_ENVNAME=${uMAMBA_ENVNAME:-ngs-pl}
+uMAMBA_ENVNAME=${uMAMBA_ENVNAME:-vvg-base}
 uMAMBA_DIR="${BASEDIR}/opt/umamba"
 
 mkdir -p ${BINDIR}
@@ -110,11 +110,11 @@ echo "Preparing update script"
 cat > ${BINDIR}/update-pipeline.sh << EOF
 #!/usr/bin/env bash
 
-echo "Updating all sofware packages under \\\$VVG_BASEDIR/envs..."
-for p in \\\$VVG_BASEDIR/envs/*; do
-    if [ -d "\\\$p" ]; then
-        echo "Updating \\\${p}"
-        (cd "\\\$p"; git pull)
+echo "Updating all sofware packages under \$VVG_BASEDIR/envs..."
+for p in \$VVG_BASEDIR/envs/*; do
+    if [ -d "\$p" ]; then
+        echo "Updating \${p}"
+        (cd "\$p"; git pull)
     fi
 done
 unset p
