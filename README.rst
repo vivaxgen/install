@@ -14,7 +14,8 @@ following command::
 
     "${SHELL}" <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/sra-repo.sh)
 
-For G6PD amplicon sequencing pipeline, install with the following command::
+For `G6PD amplicon sequencing pipeline <https://github.com/vivaxgen/G6PD_MinION>`_,
+install with the following command::
 
     "${SHELL}" <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/G6PD-pl.sh)
 
@@ -42,6 +43,7 @@ assuming that VVG_BASEDIR is the base directory of the installation::
                 bin/
                     activate.sh
                     micromamba
+                    update-pipeline.sh
                 opt/
                     umamba/
                     apptainer/
@@ -69,6 +71,10 @@ assuming that VVG_BASEDIR is the base directory of the installation::
 
 ``bin/micromamba``
   The micromamba executable binary.
+
+``bin/update-pipeline.sh``
+  A script that will traverse to each directory under ``$VVG_BASEDIR/envs/``
+  and perform a ``git pull``.
 
 ``opt/umamba/``
   The directory to hold micromamba environments and packages.
