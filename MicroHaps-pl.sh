@@ -32,13 +32,9 @@ fi
 # default value
 BASEDIR="${BASEDIR:-./vvg-MicroHaps}"
 
+OMIT="${OMIT:-}"
 uMAMBA_ENVNAME='MicroHaps'
 source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/ngs-pl.sh)
-
-OMIT="${OMIT:-}"
-
-echo "Installing latest htslib tools"
-micromamba -y install "bcftools>=1.18" "samtools>=1.18" -c conda-forge -c bioconda -c defaults
 
 echo "Installing latest bedtools"
 micromamba -y install bedtools -c conda-forge -c bioconda -c defaults
@@ -46,17 +42,11 @@ micromamba -y install bedtools -c conda-forge -c bioconda -c defaults
 #echo "Installing python version 3.8"
 #micromamba -y install "python=3.8" -c conda-forge -c bioconda -c defaults
 
-echo "Installing latest fastp"
-micromamba -y install fastp -c conda-forge -c bioconda
-
 echo "Installing latest bwa"
 micromamba -y install bwa -c conda-forge -c bioconda -c defaults
 
 #echo "installing minimap2"
 #micromamba -y install minimap2 -c conda-forge -c bioconda -c defaults
-
-echo "installing parallel"
-micromamba -y install parallel -c conda-forge -c bioconda -c defaults
 
 echo "Installing datamash"
 micromamba -y install datamash -c conda-forge -c bioconda -c defaults
@@ -97,9 +87,6 @@ micromamba -y install mosdepth -c conda-forge -c bioconda -c defaults
 echo "Installing samclip"
 micromamba -y install samclip -c conda-forge -c bioconda -c defaults
 
-echo "Installing sambamba"
-micromamba -y install sambamba -c conda-forge -c bioconda -c defaults
-
 #echo "Installing cutadapt"
 #micromamba -y install cutadapt -c conda-forge -c bioconda -c defaults
 
@@ -121,11 +108,6 @@ BiocManager::install("ShortRead")
 BiocManager::install("dada2")
 BiocManager::install("limma")
 EOF
-
-if ! [[ "$OMIT" =~ GATK ]]; then
-  echo "Installing the latest GATK"
-  micromamba -y install GATK4 -c conda-forge -c bioconda
-fi
 
 echo "installing required Python modules"
 pip3 install cyvcf2
