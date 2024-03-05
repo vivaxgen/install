@@ -66,6 +66,9 @@ micromamba -y install chopper -c conda-forge -c bioconda -c defaults
 echo "Installing snpEff"
 micromamba -y install snpeff -c conda-forge -c bioconda -c defaults
 
+echo "Installing sambamba"
+micromamba -y install sambamba -c conda-forge -c bioconda -c defaults
+
 echo "installing required Python modules"
 pip3 install cyvcf2
 pip3 install pysam
