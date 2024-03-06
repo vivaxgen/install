@@ -79,6 +79,7 @@ pip3 install matplotlib
 pip3 install pycairo
 pip3 install NanoPlot
 pip3 install argcomplete
+pip3 install openpyxl
 
 echo Cloning vivaxGEN ngs-pipeline
 git clone https://github.com/vivaxgen/ngs-pipeline.git ${ENVS_DIR}/ngs-pipeline
