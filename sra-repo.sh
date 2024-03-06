@@ -51,13 +51,9 @@ pip3 install argcomplete
 pip3 install flufl.lock
 pip3 install pyyaml
 
-# prepare ngs-pipeline environment
-mkdir -p ${BASEDIR}/opt/env
-
 echo Cloning vivaxGEN SRA-Repo
-git clone https://github.com/vivaxgen/sra-repo.git ${BASEDIR}/opt/env/sra-repo
-
-echo "source \${VVG_BASEDIR}/opt/env/sra-repo/bin/activate.sh" >> ${BASEDIR}/bin/activate.sh
+git clone https://github.com/vivaxgen/sra-repo.git ${ENVS_DIR}/sra-repo
+ln -sr ${ENVS_DIR}/sra-repo/bin/activate.sh ${BASHRC_DIR}/50-sra-repo
 
 echo preparing directories
 mkdir -p ${BASEDIR}/store
@@ -65,19 +61,6 @@ mkdir -p ${BASEDIR}/store/.lock
 touch ${BASEDIR}/store/.sra-repo-db
 mkdir -p ${BASEDIR}/tmp
 mkdir -p ${BASEDIR}/cache
-
-echo Setting up environment
-cat >> ${BASEDIR}/bin/activate.sh << EOF
-
-# setting up environment
-export SRA_REPO_STORE=\${VVG_BASEDIR}/store
-export SRA_REPO_TMPDIR=\${VVG_BASEDIR}/tmp
-
-# for samtools fasta commands
-export REF_PATH=\${VVG_BASEDIR}/cache/%2s/%2s/%s:http://www.ebi.ac.uk/ena/cram/md5/%s
-export REF_CACHE=\${VVG_BASEDIR}/cache/%2s/%2s/%s
-
-EOF
 
 echo "vivaxGEN SRA-Repo has been successfully installed. Read the docs for usage."
 echo "Please source the activation file to start using it:"
