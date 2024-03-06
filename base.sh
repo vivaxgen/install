@@ -154,6 +154,19 @@ pip3 install wheel
 pip3 install 'pulp<2.8'
 pip3 install 'snakemake<8'
 
+echo Extracting snakemake cluster profiles
+curl -s -L https://raw.github.com/vivaxgen/install/main/snakemake-profiles.tar.gz | tar xvz -C ${ETC_DIR}
+
+if [ -x "$(command -v srun)" ] && [ -x "$(command -v scancel)" ]; then
+  echo "Setting up for SLURM"
+  ln -sr ${SNAKEMAKEPROFILE_DIR}/slurm/99-snakemake-profile ${BASHRC_DIR}/
+elif [ -x "$(command -v qrun)" ] && [ -x "$(command -v qdel)" ]; then
+  echo "Setting up for PBS/Torque"
+  ln -sr ${SNAKEMAKEPROFILE_DIR}/slurm/99-snakemake-profile ${BASHRC_DIR}/
+else
+  echo "No batch/job scheduler found"
+fi
+
 echo "Preparing activation source file"
 python3 << EOF
 
