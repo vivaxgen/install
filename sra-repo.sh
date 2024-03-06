@@ -62,6 +62,7 @@ touch ${BASEDIR}/store/.sra-repo-db
 mkdir -p ${BASEDIR}/tmp
 mkdir -p ${BASEDIR}/cache
 
+echo ""
 echo "vivaxGEN SRA-Repo has been successfully installed. Read the docs for usage."
 echo "Please source the activation file to start using it:"
 echo ""
