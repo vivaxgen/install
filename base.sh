@@ -164,8 +164,8 @@ fi
 echo "Installing base python 3.11"
 micromamba -y install python=3.11 -c conda-forge -c defaults
 pip3 install wheel
-pip3 install 'pulp<2.8'
-pip3 install 'snakemake<8'
+#pip3 install 'pulp<2.8'
+#pip3 install 'snakemake<8'
 
 echo Extracting snakemake cluster profiles
 curl -s -L https://raw.github.com/vivaxgen/install/main/snakemake-profiles.tar.gz | tar xvz -C ${ETC_DIR}
@@ -187,9 +187,9 @@ import pathlib, os
 
 BASEDIR = pathlib.Path("${BASEDIR}").resolve()
 uMAMBA_ENVNAME = "${uMAMBA_ENVNAME}"
-activation_file = BASEDIR / 'bin' / "activate.sh"
+bashrc_file = BASEDIR / 'etc' / "bashrc"
 
-content = f"""
+bashrc_content = f"""
 
 # -- base activation source script from install/base.sh --
 # -- [https://github.com/vivaxgen/install] --
@@ -211,14 +211,43 @@ unset rc
 
 """
 
-with open(activation_file, "w") as out:
-  out.write(content)
+with open(bashrc_file, "w") as out:
+  out.write(bashrc_content)
 
-print("\n\nTo activate the micromamba environment, source the activation script:\n")
+activation_file = BASEDIR / 'bin' / 'activate'
+
+activation_content = f"""
+#!/usr/bin/env bash
+
+BASHRC={bashrc_file.as_posix()}
+
+if [[ "\${{BASH_SOURCE[0]}}" == "\${{0}}" ]]; then
+  set -o errexit
+  set -o pipefail
+  set -o nounset
+
+  bash --init-file <(echo ". /etc/profile; . ~/.bash_profile; . \${{BASHRC}}")
+
+else
+
+  . \${{BASHRC}}
+
+fi
+
+"""
+
+with open(activation_file, "w") as out:
+  out.write(activation_content)
+
+
+print("\n\nTo activate the micromamba environment, either run the activation script")
+print("to get a new shell:\n")
+print("    " + activation_file.as_posix())
+print("\nor source the activation script (eg. inside another script):\n")
 print("    source " + activation_file.as_posix())
 print("")
 
 EOF
-
+chmod a+x ${BINDIR}/activate
 
 # EOF

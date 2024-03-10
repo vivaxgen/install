@@ -49,25 +49,14 @@ assuming that VVG_BASEDIR is the base directory of the installation::
                     apptainer/
                 envs/
                 etc/
+                    bashrc
                     bashrc.d/
                     snakemake-profiles/
 
 ``bin/activate.sh``
-  The activation script which needed to be source first before using the
-  installed software package, will perform the following:
-
-  - export ``$VVG_BASEDIR`` environment variable with the VVG_BASEDIR
-
-  - add ``$VVG_BASEDIR/bin/`` to PATH
-
-  - set ``$MAMBA_ROOT_PREFIX`` to ``$VVG_BASEDIR/opt/umamba``
-
-  - set ``$APPTAINER_DIR`` to ``$VVG_BASEDIR/opt/apptainer`` to hold any apptainer
-    images (if required)
-
-  - prepare and activate the required micromamba environment
-
-  - source any bashrc file in ``$VVG_BASEDIR/etc/bashrc.d/`` in alphabetical order
+  The main dual activation/source script. If the script is executed, then a
+  new shell will be initiated (which then can be sxited), while if the script
+  is being sourced, the current shell will remain.
 
 ``bin/micromamba``
   The micromamba executable binary.
@@ -85,9 +74,26 @@ assuming that VVG_BASEDIR is the base directory of the installation::
 ``envs/``
   The directory to hold the pipeline environments and/or the software packages.
 
+``etc/bashrc``
+  The main source script which needed to be source first before using the
+  installed software package, and performs the following:
+
+  - export ``$VVG_BASEDIR`` environment variable with the VVG_BASEDIR
+
+  - add ``$VVG_BASEDIR/bin/`` to PATH
+
+  - set ``$MAMBA_ROOT_PREFIX`` to ``$VVG_BASEDIR/opt/umamba``
+
+  - set ``$APPTAINER_DIR`` to ``$VVG_BASEDIR/opt/apptainer`` to hold any apptainer
+    images (if required)
+
+  - prepare and activate the required micromamba environment
+
+  - source any bashrc file in ``$VVG_BASEDIR/etc/bashrc.d/`` in alphabetical order
+
 ``etc/bashrc.d/``
   Directory containing bash resource files to be sourced in alphabetical order
-  when ``bin/activate.sh`` is being sourced.
+  when ``etc/bashrc`` is being sourced.
   Software package's specific activation source file should be put inside this
   directory.
 
