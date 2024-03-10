@@ -8,6 +8,9 @@
 
 set -eu
 
+# add helper function
+repeat() { while :; do $@ && return; sleep 5; done }
+
 # Detect the shell from which the script was called
 parent=$(ps -o comm $PPID |tail -1)
 parent=${parent#-}  # remove the leading dash that login shells have
@@ -123,6 +126,16 @@ echo "Updating finished."
 
 EOF
 chmod a+x ${BINDIR}/update-pipeline.sh
+
+echo "Preparing micromamba environment export script"
+cat > ${BINDIR}/export-environment.sh << EOF
+#!/usr/bin/env bash
+
+echo "Exporting environment to \$VVG_BASEDIR/etc/env.yaml"
+micromamba env export > \$VVG_BASEDIR/etc/env.yaml
+
+EOF
+chmod a+x ${BINDIR}/export-environment.sh
 
 export MAMBA_ROOT_PREFIX=${uMAMBA_DIR}
 eval "$(${BINDIR}/micromamba shell hook -s posix)"
