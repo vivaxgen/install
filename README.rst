@@ -26,7 +26,7 @@ install with the following command::
 
 The base can be installed using the following command::
 
-    "${SHELL}" <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/MicroHaps-pl.sh)
+    "${SHELL}" <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/base.sh)
 
 
 Quick Overview
