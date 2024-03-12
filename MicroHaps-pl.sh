@@ -140,7 +140,7 @@ echo Activating enviroment
 # prevent unbound variable for PYTHONPATH and NGS_PIPELINE_CMD_MODS
 export PYTHONPATH=""
 export NGS_PIPELINE_CMD_MODS=""
-source ${BINDIR}/activate.sh
+source ${BINDIR}/activate
 
 echo Initialize enviroment
 ngs-pl initialize --target wgs
