@@ -69,6 +69,11 @@ micromamba -y install snpeff -c conda-forge -c bioconda -c defaults
 echo "Installing sambamba"
 micromamba -y install sambamba -c conda-forge -c bioconda -c defaults
 
+if ! ([ -x "$(command -v gcc)" ] && [ -x "$(command -v ar)" ]); then
+  echo "Installing essential c-compiler"
+  micromamba -y install c-compiler -c conda-forge -c defaults
+fi
+
 echo "installing required Python modules"
 pip3 install 'pulp<2.8'
 pip3 install 'snakemake<8'
