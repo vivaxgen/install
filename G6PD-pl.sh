@@ -49,7 +49,7 @@ echo Activating enviroment
 # prevent unbound variable for PYTHONPATH and NGS_PIPELINE_CMD_MODS
 export PYTHONPATH=""
 export NGS_PIPELINE_CMD_MODS=""
-source ${BASEDIR}/bin/activate.sh
+source ${BASEDIR}/bin/activate
 
 # install Clair3 using apptainer/singularity image, since the conda-based
 # installation requires python version 3.9.0, conflicting with our python 3.11
