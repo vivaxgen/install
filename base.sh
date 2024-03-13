@@ -161,6 +161,11 @@ if ! [ -x "$(command -v parallel)" ]; then
   micromamba -y install parallel -c conda-forge -c defaults
 fi
 
+if ! ([ -x "$(command -v gcc)" ] && [ -x "$(command -v ar)" ]); then
+  echo "Installing essential c-compiler"
+  micromamba -y install c-compiler -c conda-forge
+fi
+
 echo "Installing base python 3.11"
 micromamba -y install python=3.11 -c conda-forge -c defaults
 pip3 install wheel
@@ -226,7 +231,7 @@ if [[ "\${{BASH_SOURCE[0]}}" == "\${{0}}" ]]; then
   set -o pipefail
   set -o nounset
 
-  bash --init-file <(echo ". /etc/profile; . ~/.bash_profile; . \${{BASHRC}}")
+  bash --init-file <(echo ". /etc/profile; . ~/.bashrc; . \${{BASHRC}}")
 
 else
 
