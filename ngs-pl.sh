@@ -78,7 +78,12 @@ pip3 install pandas
 pip3 install Pillow
 pip3 install IPython
 pip3 install matplotlib
-pip3 install pycairo
+
+# pip3 install pycairo
+# we use conda pycairo since pip pycairo does not have complete binary
+# distribution
+micromamba install pycairo -c conda-forge
+
 pip3 install NanoPlot
 pip3 install argcomplete
 pip3 install openpyxl
