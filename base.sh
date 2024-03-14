@@ -161,9 +161,14 @@ if ! [ -x "$(command -v parallel)" ]; then
   micromamba -y install parallel -c conda-forge -c defaults
 fi
 
-if ! ([ -x "$(command -v gcc)" ] && [ -x "$(command -v ar)" ]); then
+if ! ([ -x "$(command -v cc)" ] && [ -x "$(command -v ar)" ]); then
   echo "Installing essential c-compiler"
   micromamba -y install c-compiler -c conda-forge
+fi
+
+if ! ([ -x "$(command -v c++)" ] && [ -x "$(command -v ar)" ]); then
+  echo "Installing essential cxx-compiler"
+  micromamba -y install cxx-compiler -c conda-forge
 fi
 
 echo "Installing base python 3.11"
