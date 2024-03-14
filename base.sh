@@ -11,6 +11,27 @@ set -eu
 # add helper function
 repeat() { while :; do $@ && return; sleep 5; done }
 
+# taken from https://gist.github.com/sj26/88e1c6584397bb7c13bd11108a579746
+function retry {
+  local retries=$1
+  shift
+
+  local count=0
+  until "$@"; do
+    exit=$?
+    wait=$((2 ** $count))
+    count=$(($count + 1))
+    if [ $count -lt $retries ]; then
+      echo "Retry $count/$retries exited $exit, retrying in $wait seconds..."
+      sleep $wait
+    else
+      echo "Retry $count/$retries exited $exit, no more retries left."
+      return $exit
+    fi
+  done
+  return 0
+}
+
 # Detect the shell from which the script was called
 parent=$(ps -o comm $PPID |tail -1)
 parent=${parent#-}  # remove the leading dash that login shells have
@@ -163,17 +184,18 @@ fi
 
 if ! ([ -x "$(command -v cc)" ] && [ -x "$(command -v ar)" ]); then
   echo "Installing essential c-compiler"
-  micromamba -y install c-compiler -c conda-forge
+  retry 5 micromamba -y install c-compiler -c conda-forge
 fi
 
 if ! ([ -x "$(command -v c++)" ] && [ -x "$(command -v ar)" ]); then
   echo "Installing essential cxx-compiler"
-  micromamba -y install cxx-compiler -c conda-forge
+  retry 5 micromamba -y install cxx-compiler -c conda-forge
 fi
 
 echo "Installing base python 3.11"
-micromamba -y install python=3.11 -c conda-forge -c defaults
+retry 5 micromamba -y install python=3.11 -c conda-forge -c defaults
 pip3 install wheel
+
 #pip3 install 'pulp<2.8'
 #pip3 install 'snakemake<8'
 
