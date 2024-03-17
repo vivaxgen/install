@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# check if we are under CONDA environment, and exit if we are
+if [[ $CONDA_SHLVL -ge 1 ]]; then
+  echo "Cannot perform installation while under a CONDA environment."
+  echo "Please deactivate the environment first."
+  exit 1
+fi
+
 # below is ripped-off from micro.mamba.pm/install.sh
 
 # optional env variables:
@@ -226,12 +233,17 @@ bashrc_content = f"""
 # -- base activation source script from install/base.sh --
 # -- [https://github.com/vivaxgen/install] --
 
-export VVG_BASEDIR={BASEDIR}
-PATH=\${{VVG_BASEDIR}}/bin:\${{PATH}}
-export MAMBA_ROOT_PREFIX=\${{VVG_BASEDIR}}/opt/umamba
-export APPTAINER_DIR=\${{VVG_BASEDIR}}/opt/apptainer
-eval "\$(micromamba shell hook -s posix)"
-micromamba activate {uMAMBA_ENVNAME}
+# check if VVG_BASEDIR is already there, then we will not re-set
+# every variables and will not re-active micromamba
+
+if [ -z \${{VVG_BASEDIR}} ]; then
+  export VVG_BASEDIR={BASEDIR}
+  PATH=\${{VVG_BASEDIR}}/bin:\${{PATH}}
+  export MAMBA_ROOT_PREFIX=\${{VVG_BASEDIR}}/opt/umamba
+  export APPTAINER_DIR=\${{VVG_BASEDIR}}/opt/apptainer
+  eval "\$(micromamba shell hook -s posix)"
+  micromamba activate {uMAMBA_ENVNAME}
+fi
 
 for rc in \${{VVG_BASEDIR}}/etc/bashrc.d/*; do
     if [ -f "\$rc" ]; then
@@ -258,7 +270,7 @@ if [[ "\${{BASH_SOURCE[0]}}" == "\${{0}}" ]]; then
   set -o pipefail
   set -o nounset
 
-  bash --init-file <(echo ". /etc/profile; . ~/.bashrc; . \${{BASHRC}}")
+  bash --init-file <(echo "unset VVG_BASEDIR; . /etc/profile; . ~/.bashrc; . \${{BASHRC}}")
 
 else
 
@@ -271,7 +283,7 @@ fi
 with open(activation_file, "w") as out:
   out.write(activation_content)
 
-
+print("Activation source file is successfully prepared.")
 print("\n\nTo activate the micromamba environment, either run the activation script")
 print("to get a new shell:\n")
 print("    " + activation_file.as_posix())
