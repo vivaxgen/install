@@ -39,7 +39,7 @@ OMIT="${OMIT:-}"
 
 if ! [[ "$OMIT" =~ GATK ]]; then
   echo "Installing the latest GATK"
-  micromamba -y install GATK4 -c conda-forge -c bioconda
+  retry 5 micromamba -y install GATK4 -c conda-forge -c bioconda
 fi
 
 echo "Installing latest htslib tools"
