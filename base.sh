@@ -1,12 +1,5 @@
 #!/bin/sh
 
-# check if we are under CONDA environment, and exit if we are
-if [[ $CONDA_SHLVL -ge 1 ]]; then
-  echo "Cannot perform installation while under an active CONDA environment."
-  echo "Please deactivate the environment first."
-  exit 1
-fi
-
 # below is ripped-off from micro.mamba.pm/install.sh
 
 # optional env variables:
@@ -14,6 +7,14 @@ fi
 # - uMAMBA_ENVNAME
 
 set -eu
+
+# check if we are under CONDA environment, and exit if we are
+if [[ ${CONDA_SHLVL:-} -ge 1 ]]; then
+  echo "Cannot perform installation while under an active CONDA environment."
+  echo "Please deactivate the environment first."
+  exit 1
+fi
+
 
 # add helper function
 repeat() { while :; do $@ && return; sleep 5; done }
