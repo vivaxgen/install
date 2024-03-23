@@ -32,7 +32,7 @@ fi
 # default value
 BASEDIR="${BASEDIR:-./vvg-ngspl}"
 
-uMAMBA_ENVNAME='ngs-pl'
+uMAMBA_ENVNAME="${uMAMBA_ENVNAME:-ngs-pl}"
 source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/base.sh)
 
 OMIT="${OMIT:-}"
