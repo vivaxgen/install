@@ -56,10 +56,16 @@ retry 5 apptainer pull ${APPTAINER_DIR}clair3.sif docker://hkubal/clair3:latest
 echo "Indexing reference sequence"
 ngs-pl index-reference
 
+echo
 echo "G6PD pipeline has been successfully installed."
-echo "Please use the following command to source the activation script and activate the environment:"
-echo ""
-echo "    source ${BASEDIR}/bin/activate.sh"
-echo ""
+echo "To activate the G6PD pipeline environment, either run the activation script"
+echo "to get a new shell:"
+echo
+echo "    "`realpath ${BINDIR}/activate``
+echo
+echo "or source the activation script (eg. inside another script):"
+echo
+echo "    source "`realpath ${BINDIR}/activate``
+echo
 
 # EOF
