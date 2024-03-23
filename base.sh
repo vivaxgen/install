@@ -2,7 +2,7 @@
 
 # check if we are under CONDA environment, and exit if we are
 if [[ $CONDA_SHLVL -ge 1 ]]; then
-  echo "Cannot perform installation while under a CONDA environment."
+  echo "Cannot perform installation while under an active CONDA environment."
   echo "Please deactivate the environment first."
   exit 1
 fi
@@ -65,9 +65,9 @@ if [ -t 0 ] && [ -z "${uMAMBA_ENVNAME:-}" ]; then
 fi
 
 # Fallbacks
-BASEDIR="${BASEDIR:-./vvg-base}"
+export BASEDIR="${BASEDIR:-./vvg-base}"
 BINDIR="${BASEDIR}/bin"
-uMAMBA_ENVNAME=${uMAMBA_ENVNAME:-vvg-base}
+export uMAMBA_ENVNAME=${uMAMBA_ENVNAME:-vvg-base}
 uMAMBA_DIR="${BASEDIR}/opt/umamba"
 
 mkdir -p ${BINDIR}
@@ -137,35 +137,13 @@ mkdir ${ETC_DIR}
 mkdir ${BASHRC_DIR}
 mkdir ${SNAKEMAKEPROFILE_DIR}
 
-echo "Preparing update script"
-cat > ${BINDIR}/update-pipeline.sh << EOF
-#!/usr/bin/env bash
+# check if we are provided with MAMBA_ROOT_PREFIX
+if [[ -z ${MAMBA_ROOT_PREFIX:-} ]]; then
+  export MAMBA_ROOT_PREFIX=${uMAMBA_DIR}
+else
+  echo "Using provided MAMBA_ROOT_PREFIX=${MAMBA_ROOT_PREFIX}"
+fi
 
-echo "Updating all sofware packages under \$VVG_BASEDIR/envs..."
-for p in \$VVG_BASEDIR/envs/*; do
-    if [ -d "\$p" ]; then
-        echo "Updating \${p}"
-        (cd "\$p"; git pull)
-    fi
-done
-unset p
-
-echo "Updating finished."
-
-EOF
-chmod a+x ${BINDIR}/update-pipeline.sh
-
-echo "Preparing micromamba environment export script"
-cat > ${BINDIR}/export-environment.sh << EOF
-#!/usr/bin/env bash
-
-echo "Exporting environment to \$VVG_BASEDIR/etc/env.yaml"
-micromamba env export > \$VVG_BASEDIR/etc/env.yaml
-
-EOF
-chmod a+x ${BINDIR}/export-environment.sh
-
-export MAMBA_ROOT_PREFIX=${uMAMBA_DIR}
 eval "$(${BINDIR}/micromamba shell hook -s posix)"
 
 echo "Creating ${uMAMBA_ENVNAME} environment"
@@ -201,10 +179,6 @@ fi
 
 echo "Installing base python 3.11"
 retry 5 micromamba -y install python=3.11 -c conda-forge -c defaults
-pip3 install wheel
-
-#pip3 install 'pulp<2.8'
-#pip3 install 'snakemake<8'
 
 echo Extracting snakemake cluster profiles
 curl -s -L https://raw.github.com/vivaxgen/install/main/snakemake-profiles.tar.gz | tar xvz -C ${ETC_DIR}
@@ -219,79 +193,24 @@ else
   echo "No batch/job scheduler found"
 fi
 
+# install vvg-base repo
+echo "Cloning vivaxGEN vvg-base repository"
+git clone https://github.com/vivaxgen/vvg-base.git ${ENVS_DIR}/vvg-base
+ln -sr ${ENVS_DIR}/vvg-base/etc/bashrc ${ETC_DIR}/bashrc
+
+# prepare activation file
 echo "Preparing activation source file"
-python3 << EOF
+${ENVS_DIR}/vvg-base/bin/generate-activation-script.py
 
-import pathlib, os
-
-BASEDIR = pathlib.Path("${BASEDIR}").resolve()
-uMAMBA_ENVNAME = "${uMAMBA_ENVNAME}"
-bashrc_file = BASEDIR / 'etc' / "bashrc"
-
-bashrc_content = f"""
-
-# -- base activation source script from install/base.sh --
-# -- [https://github.com/vivaxgen/install] --
-
-# check if VVG_BASEDIR is already there, then we will not re-set
-# every variables and will not re-active micromamba
-
-if [ -z \${{VVG_BASEDIR}} ]; then
-  export VVG_BASEDIR={BASEDIR}
-  PATH=\${{VVG_BASEDIR}}/bin:\${{PATH}}
-  export MAMBA_ROOT_PREFIX=\${{VVG_BASEDIR}}/opt/umamba
-  export APPTAINER_DIR=\${{VVG_BASEDIR}}/opt/apptainer
-  eval "\$(micromamba shell hook -s posix)"
-  micromamba activate {uMAMBA_ENVNAME}
-fi
-
-for rc in \${{VVG_BASEDIR}}/etc/bashrc.d/*; do
-    if [ -f "\$rc" ]; then
-        . "\$rc"
-    fi
-done
-unset rc
-
-
-"""
-
-with open(bashrc_file, "w") as out:
-  out.write(bashrc_content)
-
-activation_file = BASEDIR / 'bin' / 'activate'
-
-activation_content = f"""
-#!/usr/bin/env bash
-
-BASHRC={bashrc_file.as_posix()}
-
-if [[ "\${{BASH_SOURCE[0]}}" == "\${{0}}" ]]; then
-  set -o errexit
-  set -o pipefail
-  set -o nounset
-
-  bash --init-file <(echo "unset VVG_BASEDIR; . /etc/profile; . ~/.bashrc; . \${{BASHRC}}")
-
-else
-
-  . \${{BASHRC}}
-
-fi
-
-"""
-
-with open(activation_file, "w") as out:
-  out.write(activation_content)
-
-print("Activation source file is successfully prepared.")
-print("\n\nTo activate the micromamba environment, either run the activation script")
-print("to get a new shell:\n")
-print("    " + activation_file.as_posix())
-print("\nor source the activation script (eg. inside another script):\n")
-print("    source " + activation_file.as_posix())
-print("")
-
-EOF
-chmod a+x ${BINDIR}/activate
+echo
+echo "To activate the micromamba environment, either run the activation script"
+echo "to get a new shell:"
+echo
+echo "    ${BINDIR}/activate"
+echo
+echo "or source the activation script (eg. inside another script):"
+echo
+echo "    source ${BINDIR}/activate"
+echo
 
 # EOF
