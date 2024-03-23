@@ -90,13 +90,14 @@ pip3 install openpyxl
 
 echo Cloning vivaxGEN ngs-pipeline
 git clone https://github.com/vivaxgen/ngs-pipeline.git ${ENVS_DIR}/ngs-pipeline
-ln -sr ${ENVS_DIR}/ngs-pipeline/bin/activate.sh ${BASHRC_DIR}/10-ngs-pipeline
+ln -sr ${ENVS_DIR}/ngs-pipeline/etc/bashrc.d/10-ngs-pipeline ${BASHRC_DIR}/
 
+echo
 echo "vivaxGEN ngs-pipeline has been successfully installed. "
 echo "Please read the docs for further setup."
 echo "The base installation directory (VVG_BASEDIR) is:"
 echo
-echo ${BASEDIR}
+echo `realpath ${BASEDIR}`
 echo
 
 # EOF
