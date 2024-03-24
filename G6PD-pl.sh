@@ -61,11 +61,11 @@ echo "G6PD pipeline has been successfully installed."
 echo "To activate the G6PD pipeline environment, either run the activation script"
 echo "to get a new shell:"
 echo
-echo "    "`realpath ${BINDIR}/activate`
+echo "    `realpath ${BINDIR}/activate`"
 echo
 echo "or source the activation script (eg. inside another script):"
 echo
-echo "    source "`realpath ${BINDIR}/activate`
+echo "    source `realpath ${BINDIR}/activate`"
 echo
 
 # EOF
