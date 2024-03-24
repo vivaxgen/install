@@ -33,7 +33,7 @@ fi
 BASEDIR="${BASEDIR:-./vvg-MicroHaps}"
 
 OMIT="${OMIT:-}"
-uMAMBA_ENVNAME='MicroHaps'
+uMAMBA_ENVNAME='muhaps'
 source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/ngs-pl.sh)
 
 echo "Installing latest bedtools"
@@ -130,26 +130,19 @@ pip3 install tqdm
 echo Cloning vivaxGEN MicroHaps pipeline
 git clone https://github.com/vivaxgen/MicroHaps.git ${ENVS_DIR}/MicroHaps
 #echo "source \${VVG_BASEDIR}/env/MicroHaps/activate.sh" >> ${DIR}/bin/activate.sh
-ln -sr ${ENVS_DIR}/MicroHaps/activate.sh ${BASHRC_DIR}/50-MicroHaps
+ln -sr ${ENVS_DIR}/MicroHaps/etc/bashrc.d/50-microhaps ${BASHRC_DIR}/
 
-#echo Cloning fastq2matrix
-#git clone https://github.com/pathogenseq/fastq2matrix.git ${BASEDIR}/env/fastq2matrix
-#echo "export PYTHONPATH=\${PYTHONPATH}:\${VVG_BASEDIR}/env/fastq2matrix" >> ${BASEDIR}/bin/activate.sh
+echo "Reloading profiles"
+reload_vvg_profiles
 
-echo Activating enviroment
-# prevent unbound variable for PYTHONPATH and NGS_PIPELINE_CMD_MODS
-export PYTHONPATH=""
-export NGS_PIPELINE_CMD_MODS=""
-source ${BINDIR}/activate
-
-echo Initialize enviroment
+echo "Initialize enviroment"
 ngs-pl initialize --target wgs
 
 echo ""
 echo "vivaxGEN MicroHaps pipeline has been successfully installed."
 echo "Please source the activation file with the following command:"
 echo ""
-echo "    source" `readlink -e ${BINDIR}/activate.sh`
+echo "    source" `realpath ${BINDIR}/activate.sh`
 echo ""
 
 # EOF
