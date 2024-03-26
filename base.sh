@@ -205,7 +205,9 @@ echo "Preparing activation source file"
 ${ENVS_DIR}/vvg-base/bin/generate-activation-script.py
 
 # re-activate environment
+echo "Deactivate current environment"
 micromamba deactivate
+echo "Activate current environment"
 source ${BINDIR}/activate
 
 echo
