@@ -140,9 +140,13 @@ ngs-pl initialize --target wgs
 
 echo ""
 echo "vivaxGEN MicroHaps pipeline has been successfully installed."
-echo "Please source the activation file with the following command:"
+echo "Please run the activation file with the following command:"
 echo ""
-echo "    source" `realpath ${BINDIR}/activate.sh`
+echo "    `realpath ${BINDIR}/activate`"
+echo ""
+echo "or source the activation file (eg. inside a script):"
+echo ""
+echo "    source `realpath ${BINDIR}/activate`"
 echo ""
 
 # EOF
