@@ -178,8 +178,9 @@ if ! ([ -x "$(command -v c++)" ] && [ -x "$(command -v ar)" ]); then
   retry 5 micromamba -y install cxx-compiler -c conda-forge
 fi
 
-echo "Installing base python 3.11"
-retry 5 micromamba -y install python=3.11 -c conda-forge -c defaults
+PYVER=${PYVER:-3.11}
+echo "Installing base python ${PYVER}"
+retry 5 micromamba -y install python=${PYVER} -c conda-forge -c defaults
 
 echo Extracting snakemake cluster profiles
 curl -s -L https://raw.github.com/vivaxgen/install/main/snakemake-profiles.tar.gz | tar xvz -C ${ETC_DIR}
