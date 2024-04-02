@@ -187,19 +187,6 @@ PYVER=${PYVER:-3.12}
 echo "Installing base python ${PYVER}"
 retry 5 micromamba -y install python=${PYVER} -c conda-forge -c defaults
 
-echo Extracting snakemake cluster profiles
-curl -s -L https://raw.github.com/vivaxgen/install/main/snakemake-profiles.tar.gz | tar xvz -C ${ETC_DIR}
-
-if [ -x "$(command -v srun)" ] && [ -x "$(command -v scancel)" ]; then
-  echo "Setting up for SLURM"
-  ln -sr ${SNAKEMAKEPROFILE_DIR}/slurm/99-snakemake-profile ${BASHRC_DIR}/
-elif [ -x "$(command -v qrun)" ] && [ -x "$(command -v qdel)" ]; then
-  echo "Setting up for PBS/Torque"
-  ln -sr ${SNAKEMAKEPROFILE_DIR}/slurm/99-snakemake-profile ${BASHRC_DIR}/
-else
-  echo "No batch/job scheduler found"
-fi
-
 # install vvg-base repo
 echo "Cloning vivaxGEN vvg-base repository"
 git clone https://github.com/vivaxgen/vvg-base.git ${ENVS_DIR}/vvg-base
@@ -214,6 +201,7 @@ echo "Resourcing vvg-base environment"
 export VVG_BASEDIR=${BASEDIR}
 __IN_VVG_INSTALLATION__=1
 source ${VVG_BASEDIR}/etc/bashrc
+${ENVS_DIR}/vvg-base/bin/set-cluster-config.sh
 
 echo
 echo "To activate the micromamba environment, either run the activation script"
