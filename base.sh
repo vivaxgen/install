@@ -4,7 +4,9 @@
 
 # optional env variables:
 # - BASEDIR
+# - MAMBA_ROOT_PREFIX
 # - uMAMBA_ENVNAME
+# - PYVER
 
 set -eu
 
@@ -178,7 +180,7 @@ if ! ([ -x "$(command -v c++)" ] && [ -x "$(command -v ar)" ]); then
   retry 5 micromamba -y install cxx-compiler -c conda-forge
 fi
 
-PYVER=${PYVER:-3.11}
+PYVER=${PYVER:-3.12}
 echo "Installing base python ${PYVER}"
 retry 5 micromamba -y install python=${PYVER} -c conda-forge -c defaults
 
