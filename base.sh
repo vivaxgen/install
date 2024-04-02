@@ -8,6 +8,9 @@
 # - uMAMBA_ENVNAME
 # - PYVER
 
+__VERSION__ = '2024.04.01.03'
+echo "vivaxGEN base installation script version: ${__VERSION__}"
+
 set -eu
 
 # check if we are under CONDA environment, and exit if we are
@@ -209,6 +212,7 @@ ${ENVS_DIR}/vvg-base/bin/generate-activation-script.py
 # re-source activation script
 echo "Resourcing vvg-base environment"
 export VVG_BASEDIR=${BASEDIR}
+__IN_VVG_INSTALLATION__=1
 source ${VVG_BASEDIR}/etc/bashrc
 
 echo
