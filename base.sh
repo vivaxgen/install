@@ -8,7 +8,7 @@
 # - uMAMBA_ENVNAME
 # - PYVER
 
-__VERSION__ = '2024.04.01.03'
+__VERSION__='2024.04.01.03'
 echo "vivaxGEN base installation script version: ${__VERSION__}"
 
 set -eu
