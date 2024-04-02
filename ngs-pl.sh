@@ -33,6 +33,8 @@ fi
 BASEDIR="${BASEDIR:-./vvg-ngspl}"
 
 uMAMBA_ENVNAME="${uMAMBA_ENVNAME:-ngs-pl}"
+PYVER="${PYVER:-3.12}"
+SNAKEMAKEVER="${SNAKEMAKEVER:-9}"
 source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/base.sh)
 
 OMIT="${OMIT:-}"
@@ -70,8 +72,8 @@ echo "Installing sambamba"
 micromamba -y install sambamba -c conda-forge -c bioconda -c defaults
 
 echo "installing required Python modules"
-pip3 install 'pulp<2.8'
-pip3 install 'snakemake<8'
+pip3 install "snakemake<${SNAKEMAKEVER}"
+pip3 install snakemake-executor-plugin-cluster-generic
 pip3 install cyvcf2
 pip3 install pysam
 pip3 install pandas
@@ -91,6 +93,7 @@ pip3 install openpyxl
 echo Cloning vivaxGEN ngs-pipeline
 git clone https://github.com/vivaxgen/ngs-pipeline.git ${ENVS_DIR}/ngs-pipeline
 ln -sr ${ENVS_DIR}/ngs-pipeline/etc/bashrc.d/10-ngs-pipeline ${BASHRC_DIR}/
+ln -sr ${ENVS_DIR}/ngs-pipeline/etc/bashrc.d/95-prompt-history ${BASHRC_DIR}/
 
 echo
 echo "vivaxGEN ngs-pipeline has been successfully installed. "
