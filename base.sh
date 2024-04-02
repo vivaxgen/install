@@ -204,11 +204,10 @@ ln -sr ${ENVS_DIR}/vvg-base/etc/bashrc ${ETC_DIR}/bashrc
 echo "Preparing activation source file"
 ${ENVS_DIR}/vvg-base/bin/generate-activation-script.py
 
-# re-activate environment
-echo "Deactivate current environment"
-micromamba deactivate
-echo "Activate current environment"
-source ${BINDIR}/activate
+# re-source activation script
+echo "Resourcing vvg-base environment"
+export VVG_BASEDIR=${BASEDIR}
+source ${VVG_BASEDIR}/etc/bashrc
 
 echo
 echo "To activate the micromamba environment, either run the activation script"
