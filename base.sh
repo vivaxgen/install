@@ -8,7 +8,7 @@
 # - uMAMBA_ENVNAME
 # - PYVER
 
-__VERSION__='2024.04.01.03'
+__VERSION__='2024.04.03.01'
 echo "vivaxGEN base installation script version: ${__VERSION__}"
 
 set -eu
@@ -201,11 +201,14 @@ echo "Resourcing vvg-base environment"
 export VVG_BASEDIR=${BASEDIR}
 __IN_VVG_INSTALLATION__=1
 source ${VVG_BASEDIR}/etc/bashrc
+
+echo "Detecting job/batch scheduler"
 ${ENVS_DIR}/vvg-base/bin/set-cluster-config.sh
 
 echo
+echo "vivaxGEN base installation has been successfully installed."
 echo "To activate the micromamba environment, either run the activation script"
-echo "to get a new shell:"
+echo "to spawn a new shell:"
 echo
 echo "    ${BINDIR}/activate"
 echo
