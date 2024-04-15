@@ -50,6 +50,7 @@ pip3 install IPython
 pip3 install argcomplete
 pip3 install flufl.lock
 pip3 install pyyaml
+pip3 install pandas
 
 echo Cloning vivaxGEN SRA-Repo
 git clone https://github.com/vivaxgen/sra-repo.git ${ENVS_DIR}/sra-repo
@@ -64,9 +65,12 @@ mkdir -p ${BASEDIR}/cache
 
 echo ""
 echo "vivaxGEN SRA-Repo has been successfully installed. Read the docs for usage."
-echo "Please source the activation file to start using it:"
+echo "Execute the activation file to start using it:"
 echo ""
-echo "    source" `readlink -e ${BASEDIR}/bin/activate.sh`
+echo "   " `readlink -e ${BASEDIR}/bin/activate`
+echo ""
+echo "or source the activation file (eg. inside a script):"
+echo "    source" `readlink -e ${BASEDIR}/bin/activate`
 echo ""
 
 # EOF
