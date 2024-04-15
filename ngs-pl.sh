@@ -53,6 +53,9 @@ micromamba -y install fastp -c conda-forge -c bioconda
 echo "Installing latest bwa-mem2"
 micromamba -y install bwa-mem2 -c conda-forge -c bioconda
 
+echo "Installing latest bwa"
+micromamba -y install bwa -c conda-forge -c bioconda
+
 echo "installing minimap2"
 micromamba -y install minimap2 -c conda-forge -c bioconda -c defaults
 
@@ -101,6 +104,11 @@ echo "Please read the docs for further setup."
 echo "The base installation directory (VVG_BASEDIR) is:"
 echo
 echo `realpath ${BASEDIR}`
+echo
+echo "To activate the basic NGS-Pipeline environment (eg. for installing"
+echo "or setting up base enviroment directory, execute the command:"
+echo
+echo `realpath ${BASEDIR}`/bin/activate
 echo
 
 # EOF
