@@ -52,7 +52,7 @@ reload_vvg_profiles
 # install Clair3 using apptainer/singularity image, since the conda-based
 # installation requires python version 3.9.0, conflicting with our python 3.11
 echo "Downloading Clair3 apptainer/singularity image"
-retry 5 apptainer pull ${APPTAINER_DIR}clair3.sif docker://hkubal/clair3:latest
+retry 5 apptainer pull ${APPTAINER_DIR}/clair3.sif docker://hkubal/clair3:latest
 
 echo "Indexing reference sequence"
 ngs-pl index-reference
