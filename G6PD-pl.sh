@@ -38,6 +38,7 @@ source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/ngs-pl.
 
 echo Installing apptainer
 micromamba -y install apptainer -c conda-forge -c bioconda
+micromamba -y install squashfuse -c conda-forge
 
 echo "Cloning G6PD pipeline"
 git clone https://github.com/vivaxgen/G6PD_MinION.git ${ENVS_DIR}/G6PD-pipeline
