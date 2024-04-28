@@ -34,61 +34,22 @@ BASEDIR="${BASEDIR:-./vvg-MicroHaps}"
 
 OMIT="${OMIT:-}"
 uMAMBA_ENVNAME='muhaps'
-source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/ngs-pl.sh)
+source <(curl -L https://raw.githubusercontent.com/vivaxgen/ngs-pipeline/main/install.sh)
 
 echo "Installing latest bedtools"
 micromamba -y install bedtools -c conda-forge -c bioconda -c defaults
 
-#echo "Installing python version 3.8"
-#micromamba -y install "python=3.8" -c conda-forge -c bioconda -c defaults
-
-echo "Installing latest bwa"
-micromamba -y install bwa -c conda-forge -c bioconda -c defaults
-
-#echo "installing minimap2"
-#micromamba -y install minimap2 -c conda-forge -c bioconda -c defaults
-
 echo "Installing datamash"
 micromamba -y install datamash -c conda-forge -c bioconda -c defaults
 
-#echo "Installing delly"
-#micromamba -y install delly -c conda-forge -c bioconda -c defaults
-
-#echo "Installing tqdm"
-#micromamba -y install tqdm -c conda-forge -c bioconda -c defaults
-
-#echo "Installing freebayes"
-#micromamba -y install freebayes -c conda-forge -c bioconda -c defaults
-
 echo "Installing trimmomatic"
 micromamba -y install trimmomatic -c conda-forge -c bioconda -c defaults
-
-#echo "Installing biopython"
-#micromamba -y install biopython -c conda-forge -c bioconda -c defaults
-
-#echo "Installing chopper"
-#micromamba -y install chopper -c conda-forge -c bioconda -c defaults
-
-#echo "Installing snpEff"
-#micromamba -y install snpeff -c conda-forge -c bioconda -c defaults
-
-#echo "Installing iqtree"
-#micromamba -y install iqtree -c conda-forge -c bioconda -c defaults
-
-echo "Installing fastqc"
-micromamba -y install fastqc -c conda-forge -c bioconda -c defaults
-
-#echo "Installing multiqc"
-#micromamba -y install multiqc -c conda-forge -c bioconda -c defaults
 
 echo "Installing mosdepth"
 micromamba -y install mosdepth -c conda-forge -c bioconda -c defaults
 
 echo "Installing samclip"
 micromamba -y install samclip -c conda-forge -c bioconda -c defaults
-
-#echo "Installing cutadapt"
-#micromamba -y install cutadapt -c conda-forge -c bioconda -c defaults
 
 echo "Installing muscle version v3.8.1551"
 micromamba -y install "muscle=3.8.1551" -c conda-forge -c bioconda -c defaults
@@ -110,26 +71,16 @@ BiocManager::install("limma")
 EOF
 
 echo "installing required Python modules"
-pip3 install cyvcf2
-pip3 install pysam
-pip3 install pandas
-pip3 install Pillow
-pip3 install IPython 
-pip3 install matplotlib
-#pip3 install NanoPlot
-pip3 install argcomplete
 
 # to use latest of all python-related stuff, uncomment below and remove the conda parts
 pip3 install biopython
 pip3 install cutadapt
-pip3 install multiqc
 pip3 install tqdm
 
 # prepare MicroHaps pipeline environment
 
 echo Cloning vivaxGEN MicroHaps pipeline
 git clone https://github.com/vivaxgen/MicroHaps.git ${ENVS_DIR}/MicroHaps
-#echo "source \${VVG_BASEDIR}/env/MicroHaps/activate.sh" >> ${DIR}/bin/activate.sh
 ln -sr ${ENVS_DIR}/MicroHaps/etc/bashrc.d/50-microhaps ${BASHRC_DIR}/
 
 echo "Reloading profiles"
