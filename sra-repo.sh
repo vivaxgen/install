@@ -33,7 +33,7 @@ fi
 BASEDIR="${BASEDIR:-./SRA}"
 
 uMAMBA_ENVNAME='SRA'
-source <(curl -L https://raw.githubusercontent.com/vivaxgen/install/main/base.sh)
+source <(curl -L https://raw.githubusercontent.com/vivaxgen/vvg-base/main/install.sh)
 
 echo "Installing latest htslib tools"
 # samtools is needed to convert CRAM/BAM to FASTQ files
