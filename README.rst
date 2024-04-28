@@ -34,8 +34,10 @@ Quick Overview
 --------------
 
 This repo contains install scripts (or links to install scripts) for software
-packages (such as various pipelines) that use micromamba to provide all binary
-dependencies.
+packages (such as various pipelines) developed within vivaxGEN project.
+The install scripts uses
+`micromamba <https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html>`_
+to provide all binary dependencies for the installed system.
 No configuration or setting files will be left on the home directory of the
 users who execute the install scripts (apart from download cache of micromamba
 in ~/.cache directory that can be removed manually, and addition of the
@@ -44,3 +46,7 @@ is already existed, which can also be deleted manually).
 
 The installed system using these install scripts can be uninstalled by removing
 the installation directory.
+
+For more detailed information about the mechanism of the installed system,
+please refer to vivaxGEN
+`Base  Installation Utility <https://github.com/vivaxgen/vvg-base>`_.
